@@ -1,9 +1,3 @@
-// Comment to get more information during initialization
-logLevel := Level.Warn
-
-// Resolvers
-resolvers += "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/"
-
 resolvers += Resolver.url("heroku-sbt-plugin-releases",
   url("https://dl.bintray.com/heroku/sbt-plugins/"))(Resolver.ivyStylePatterns)
 
