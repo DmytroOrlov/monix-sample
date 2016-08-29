@@ -17,10 +17,7 @@ lazy val server = (project in file("server")).settings(
   ),
   // Heroku specific
   herokuAppName in Compile := "monix-sample",
-  herokuSkipSubProjects in Compile := false,
-
-  // Play Framework
-  routesGenerator := InjectedRoutesGenerator
+  herokuSkipSubProjects in Compile := false
 ).enablePlugins(PlayScala).
   aggregate(clients.map(projectToRef): _*).
   dependsOn(sharedJvm)
