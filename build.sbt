@@ -3,31 +3,34 @@ import sbt.Project.projectToRef
 lazy val clients = Seq(client)
 lazy val scalaV = "2.11.8"
 lazy val monixV = "2.1.2"
+lazy val commonSettings = Seq(scalaVersion := scalaV)
 
-lazy val server = (project in file("server")).settings(
-  scalaVersion := scalaV,
-  scalaJSProjects := clients,
-  pipelineStages := Seq(scalaJSProd, gzip),
-  libraryDependencies ++= Seq(
-    "com.vmunier" %% "play-scalajs-scripts" % "0.5.0",
-    "org.webjars" % "jquery" % "1.12.4",
-    "org.webjars.bower" % "epoch" % "0.6.0",
-    "org.webjars" % "d3js" % "3.5.17",
-    "io.monix" %% "monix" % monixV,
-    "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
-  ),
-  // Heroku specific
-  herokuAppName in Compile := "monix-sample",
-  herokuSkipSubProjects in Compile := false
-).enablePlugins(PlayScala).
+lazy val server = (project in file("server"))
+  .settings(commonSettings: _*)
+  .settings(
+    scalaVersion := scalaV,
+    scalaJSProjects := clients,
+    pipelineStages := Seq(scalaJSProd, gzip),
+    libraryDependencies ++= Seq(
+      "com.vmunier" %% "play-scalajs-scripts" % "0.5.0",
+      "org.webjars" % "jquery" % "1.12.4",
+      "org.webjars.bower" % "epoch" % "0.6.0",
+      "org.webjars" % "d3js" % "3.5.17",
+      "io.monix" %% "monix" % monixV,
+      "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
+    ),
+    // Heroku specific
+    herokuAppName in Compile := "monix-sample",
+    herokuSkipSubProjects in Compile := false
+  ).enablePlugins(PlayScala).
   aggregate(clients.map(projectToRef): _*).
   dependsOn(sharedJvm)
 
 lazy val client = (project in file("client"))
   .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
   .dependsOn(sharedJs)
+  .settings(commonSettings: _*)
   .settings(
-    scalaVersion := scalaV,
     persistLauncher := true,
     persistLauncher in Test := false,
     // sourceMapsDirectories += sharedJs.base / "..",
@@ -38,7 +41,7 @@ lazy val client = (project in file("client"))
   )
 
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
-  .settings(scalaVersion := scalaV)
+  .settings(commonSettings: _*)
   .jsConfigure(_ enablePlugins ScalaJSPlay)
 
 lazy val sharedJvm = shared.jvm
