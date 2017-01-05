@@ -5,7 +5,7 @@ import monix.reactive.Observable
 import monix.reactive.OverflowStrategy.DropNew
 import monix.reactive.observers.Subscriber
 import org.scalajs.dom
-import shared.models.{Event, OverflowEvent, Signal}
+import shared.models.{Event, OverflowEvent, Point}
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js.Dynamic.global
 
@@ -36,7 +36,7 @@ final class DataConsumer(interval: FiniteDuration, seed: Long, doBackPressure: B
 
       json.event.asInstanceOf[String] match {
         case "point" =>
-          Some(Signal(
+          Some(Point(
             value = json.value.asInstanceOf[Number].doubleValue(),
             timestamp = json.timestamp.asInstanceOf[Number].longValue()
           ))

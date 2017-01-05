@@ -3,18 +3,18 @@ package client
 import monix.execution.Ack
 import monix.execution.Ack.Continue
 import monix.reactive.Observer
-import shared.models.Signal
+import shared.models.Point
 
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.{literal => obj, _}
 
 final class Graph(elementId: String)
-  extends Observer[(Signal, Signal, Signal, Signal)] {
+  extends Observer[(Point, Point, Point, Point)] {
 
   private var chart: js.Dynamic = null
 
-  def initChart(signal: (Signal, Signal, Signal, Signal)) = {
+  def initChart(signal: (Point, Point, Point, Point)) = {
     val (first, second, third, fourth) = signal
     val timestamp = Seq(first.timestamp, second.timestamp, third.timestamp, fourth.timestamp).max / 1000
 
@@ -57,7 +57,7 @@ final class Graph(elementId: String)
     ))
   }
     
-  private def serialize(signal: (Signal, Signal, Signal, Signal)) = {
+  private def serialize(signal: (Point, Point, Point, Point)) = {
     val (first, second, third, fourth) = signal
     val timestamp = Seq(first.timestamp, second.timestamp, third.timestamp, fourth.timestamp).max / 1000
 
@@ -80,7 +80,7 @@ final class Graph(elementId: String)
       ))
   }
 
-  def onNext(signal: (Signal, Signal, Signal, Signal)): Future[Ack] = {
+  def onNext(signal: (Point, Point, Point, Point)): Future[Ack] = {
     if (chart == null) {
       chart = initChart(signal)
     }

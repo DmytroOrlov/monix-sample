@@ -16,7 +16,7 @@ case class OverflowEvent(dropped: Long, timestamp: Long)
   val event = "overflow"
 }
 
-case class Signal(value: Double, timestamp: Long)
+case class Point(value: Double, timestamp: Long)
   extends Event {
 
   val event = "point"
