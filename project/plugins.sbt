@@ -2,7 +2,7 @@ resolvers += Resolver.url("heroku-sbt-plugin-releases",
   url("https://dl.bintray.com/heroku/sbt-plugins/"))(Resolver.ivyStylePatterns)
 
 // Sbt plugins
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.6")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.10")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.13")
 
