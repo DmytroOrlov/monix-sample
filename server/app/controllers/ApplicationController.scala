@@ -15,9 +15,6 @@ class ApplicationController()
   (implicit env: Environment, as: ActorSystem, m: Materializer)
   extends Controller with JSONFormats {
 
-  implicit val messageFlowTransformer =
-    MessageFlowTransformer.jsonMessageFlowTransformer[JsValue, JsValue]
-
   def index = Action {
     Ok(views.html.index(env))
   }
